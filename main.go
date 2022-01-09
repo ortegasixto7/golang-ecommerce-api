@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/ortegasixto7/echo-go-supermarket-api/core/product"
-	"github.com/ortegasixto7/echo-go-supermarket-api/persistence/mongoDb"
+	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requestModels"
+	"github.com/ortegasixto7/echo-go-supermarket-api/external/dependencyInjector"
 )
 
-func main() {
+func main2() {
 	// mongoDb.Setup()
 	// product := product.Product{
 	// 	Name:        "Pasta",
@@ -16,7 +16,7 @@ func main() {
 	// fmt.Println("Hello")
 	// mongoDb.Save(product)
 
-	productService := product.ProductService{Repository: &mongoDb.MongoProductPersistence{}}
-	productService.Save(product.Product{Name: "Golang"})
+	productController := dependencyInjector.ContainerBuilder{}.GetProductController()
+	productController.Save(requestModels.CreateProductRequest{Name: "Golang"})
 
 }
