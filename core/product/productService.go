@@ -18,23 +18,23 @@ func NewProductService(repository IProductPersistence) *ProductService {
 	return &ProductService{Repository: repository}
 }
 
-func (service ProductService) Save(product Product) {
-	service.Repository.Save(product)
+func (this ProductService) Save(product Product) {
+	this.Repository.Save(product)
 	fmt.Print("Product Saved")
 }
 
-func (p ProductService) Update(product Product) {
+func (this ProductService) Update(product Product) {
 	fmt.Print("Product Updated")
 }
 
-func (p ProductService) Delete(id string) {
+func (this ProductService) Delete(id string) {
 	fmt.Print("Product Deleted")
 }
 
-func (p ProductService) GetAll() []Product {
+func (this ProductService) GetAll() []Product {
 	return []Product{}
 }
 
-func (p ProductService) GetById(id string) Product {
+func (this ProductService) GetById(id string) Product {
 	return Product{}
 }

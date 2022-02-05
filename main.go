@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requestModels"
+	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/dependencyInjector"
 )
 
@@ -17,6 +17,6 @@ func main2() {
 	// mongoDb.Save(product)
 
 	productController := dependencyInjector.ContainerBuilder{}.GetProductController()
-	productController.Save(requestModels.CreateProductRequest{Name: "Golang"})
+	_, _ = productController.Create(new(requests.CreateProductRequest))
 
 }

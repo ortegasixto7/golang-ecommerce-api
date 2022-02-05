@@ -16,22 +16,22 @@ func SaveBackup(product product.Product) {
 
 type MongoProductPersistence struct{}
 
-func (repository *MongoProductPersistence) Save(product product.Product) {
+func (this *MongoProductPersistence) Save(product product.Product) {
 	log.Println(product)
 }
 
-func (repository *MongoProductPersistence) Update(product product.Product) {
+func (this *MongoProductPersistence) Update(product product.Product) {
 
 }
 
-func (repository *MongoProductPersistence) Delete(id string) {
+func (this *MongoProductPersistence) Delete(id string) {
 
 }
 
-func (repository *MongoProductPersistence) GetAll() []product.Product {
+func (this *MongoProductPersistence) GetAll() []product.Product {
 	return []product.Product{}
 }
 
-func (repository *MongoProductPersistence) GetById(id string) product.Product {
+func (this *MongoProductPersistence) GetById(id string) product.Product {
 	return product.Product{}
 }
