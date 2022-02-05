@@ -3,7 +3,7 @@ package product
 import "fmt"
 
 type IProductService interface {
-	Save(*Product)
+	Save(Product)
 	Update(*Product)
 	Delete(id string)
 	GetAll() []Product
@@ -20,7 +20,6 @@ func NewProductService(repository IProductPersistence) *ProductService {
 
 func (this ProductService) Save(product Product) {
 	this.Repository.Save(product)
-	fmt.Print("Product Saved")
 }
 
 func (this ProductService) Update(product Product) {

@@ -7,10 +7,12 @@ import (
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/dependencyInjector"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/validations/customErrors"
+	"github.com/ortegasixto7/echo-go-supermarket-api/persistence/mongoDb"
 )
 
 func main() {
 	server := echo.New()
+	mongoDb.Setup()
 	server.GET("/", func(context echo.Context) error {
 		return context.String(http.StatusOK, "Hello, World!")
 	})
