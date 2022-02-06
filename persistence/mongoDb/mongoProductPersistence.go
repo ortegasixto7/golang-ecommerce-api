@@ -5,6 +5,7 @@ import (
 
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type MongoProductPersistence struct{}
@@ -42,5 +43,12 @@ func (this MongoProductPersistence) GetAll() []product.Product {
 }
 
 func (this MongoProductPersistence) GetById(id string) product.Product {
-	return product.Product{}
+	product := product.Product{}
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.M{"_id": objectId}
+	err := ProductsCollection.FindOne(Ctx, filter).Decode(&product)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return product
 }

@@ -9,6 +9,10 @@ type ProductController struct {
 	ProductService ProductService
 }
 
+func (this ProductController) GetById(id string) Product {
+	return this.ProductService.GetById(id)
+}
+
 func (this ProductController) GetAll() []Product {
 	return this.ProductService.GetAll()
 }

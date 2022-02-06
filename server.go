@@ -36,6 +36,13 @@ func main() {
 		return c.JSON(http.StatusOK, products)
 	})
 
+	server.GET("/products/:id", func(c echo.Context) error {
+		controller := new(dependencyInjector.ContainerBuilder).GetProductController()
+		id := c.Param("id")
+		product := controller.GetById(id)
+		return c.JSON(http.StatusOK, product)
+	})
+
 	server.Logger.Fatal(server.Start(":1323"))
 }
 
