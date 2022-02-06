@@ -3,6 +3,7 @@ package product
 import (
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/validations"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type ProductController struct {
@@ -53,6 +54,7 @@ func (this ProductController) Create(request *requests.CreateProductRequest) (re
 		return requestError, errorCode
 	}
 	product := Product{
+		Id:          primitive.NewObjectID().Hex(),
 		Name:        request.Name,
 		Description: request.Description,
 		Price:       request.Price,
