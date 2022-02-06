@@ -22,12 +22,18 @@ func main() {
 		if err := c.Bind(request); err != nil {
 			return err
 		}
-		productController := new(dependencyInjector.ContainerBuilder).GetProductController()
-		requestError, errorCode := productController.Create(request)
+		controller := new(dependencyInjector.ContainerBuilder).GetProductController()
+		requestError, errorCode := controller.Create(request)
 		if requestError != "" {
 			return buildInvalidResponse(c, requestError, errorCode)
 		}
 		return c.JSON(http.StatusOK, request)
+	})
+
+	server.GET("/products", func(c echo.Context) error {
+		controller := new(dependencyInjector.ContainerBuilder).GetProductController()
+		products := controller.GetAll()
+		return c.JSON(http.StatusOK, products)
 	})
 
 	server.Logger.Fatal(server.Start(":1323"))

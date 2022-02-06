@@ -1,10 +1,8 @@
 package product
 
-import "fmt"
-
 type IProductService interface {
 	Save(Product)
-	Update(*Product)
+	Update(Product)
 	Delete(id string)
 	GetAll() []Product
 	GetById(id string) Product
@@ -23,17 +21,17 @@ func (this ProductService) Save(product Product) {
 }
 
 func (this ProductService) Update(product Product) {
-	fmt.Print("Product Updated")
+	this.Repository.Update(product)
 }
 
 func (this ProductService) Delete(id string) {
-	fmt.Print("Product Deleted")
+	this.Repository.Delete(id)
 }
 
 func (this ProductService) GetAll() []Product {
-	return []Product{}
+	return this.Repository.GetAll()
 }
 
 func (this ProductService) GetById(id string) Product {
-	return Product{}
+	return this.Repository.GetById(id)
 }

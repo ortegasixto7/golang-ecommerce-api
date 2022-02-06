@@ -9,18 +9,20 @@ type ProductController struct {
 	ProductService ProductService
 }
 
+func (this ProductController) GetAll() []Product {
+	return this.ProductService.GetAll()
+}
+
 func (this ProductController) Create(request *requests.CreateProductRequest) (requestError string, errorCode string) {
 	requestError, errorCode = new(validations.CreateProductRequestValidation).Validate(request)
 	if requestError != "" {
 		return requestError, errorCode
 	}
-
 	product := Product{
 		Name:        request.Name,
 		Description: request.Description,
 		Price:       request.Price,
 		Quantity:    0}
-
 	this.ProductService.Save(product)
 	return requestError, errorCode
 }
