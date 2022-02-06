@@ -18,7 +18,19 @@ func (this MongoProductPersistence) Save(product product.Product) {
 }
 
 func (this MongoProductPersistence) Update(product product.Product) {
-
+	objectId, _ := primitive.ObjectIDFromHex(product.Id)
+	filter := bson.M{"_id": objectId}
+	update := bson.D{
+		primitive.E{Key: "$set", Value: bson.D{
+			primitive.E{Key: "name", Value: product.Name},
+			primitive.E{Key: "description", Value: product.Description},
+			primitive.E{Key: "price", Value: product.Price},
+		}},
+	}
+	_, err := ProductsCollection.UpdateOne(Ctx, filter, update)
+	if err != nil {
+		log.Panicln(err)
+	}
 }
 
 func (this MongoProductPersistence) Delete(id string) {

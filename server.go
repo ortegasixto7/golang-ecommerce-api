@@ -17,6 +17,19 @@ func main() {
 		return context.String(http.StatusOK, "Hello, World!")
 	})
 
+	server.PUT("/products", func(c echo.Context) error {
+		request := new(requests.UpdateProductRequest)
+		if err := c.Bind(request); err != nil {
+			return err
+		}
+		controller := new(dependencyInjector.ContainerBuilder).GetProductController()
+		requestError, errorCode := controller.Update(request)
+		if requestError != "" {
+			return buildInvalidResponse(c, requestError, errorCode)
+		}
+		return c.JSON(http.StatusOK, request)
+	})
+
 	server.POST("/products", func(c echo.Context) error {
 		request := new(requests.CreateProductRequest)
 		if err := c.Bind(request); err != nil {
