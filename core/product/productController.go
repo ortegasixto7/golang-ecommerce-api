@@ -9,6 +9,17 @@ type ProductController struct {
 	ProductService ProductService
 }
 
+func (this ProductController) AddQuantity(request *requests.AddProductQuantityRequest) (requestError string, errorCode string) {
+	// requestError, errorCode = new(validations.UpdateProductRequest).Validate(request)
+	// if requestError != "" {
+	// 	return requestError, errorCode
+	// }
+	productResult := this.ProductService.GetById(request.Id)
+	productResult.Quantity += request.Quantity
+	this.ProductService.Update(productResult)
+	return requestError, errorCode
+}
+
 func (this ProductController) GetById(id string) Product {
 	return this.ProductService.GetById(id)
 }
