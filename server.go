@@ -14,20 +14,20 @@ func main() {
 	server.GET("/", func(context echo.Context) error {
 		return context.String(http.StatusOK, "API is working!")
 	})
-	server.PUT("/products/add-quantity", func(c echo.Context) error {
-		return presentation.ProductRouter{}.AddQuantity(c)
+	server.PUT("/products/add-quantity", func(context echo.Context) error {
+		return presentation.ProductRouter{}.AddQuantity(context)
 	})
-	server.PUT("/products", func(c echo.Context) error {
-		return presentation.ProductRouter{}.Update(c)
+	server.PUT("/products", func(context echo.Context) error {
+		return presentation.ProductRouter{}.Update(context)
 	})
-	server.POST("/products", func(c echo.Context) error {
-		return presentation.ProductRouter{}.Create(c)
+	server.POST("/products", func(context echo.Context) error {
+		return presentation.ProductRouter{}.Create(context)
 	})
-	server.GET("/products", func(c echo.Context) error {
-		return presentation.ProductRouter{}.GetAll(c)
+	server.GET("/products", func(context echo.Context) error {
+		return presentation.ProductRouter{}.GetAll(context)
 	})
-	server.GET("/products/:id", func(c echo.Context) error {
-		return presentation.ProductRouter{}.GetById(c)
+	server.GET("/products/:id", func(context echo.Context) error {
+		return presentation.ProductRouter{}.GetById(context)
 	})
 	server.Logger.Fatal(server.Start(":1323"))
 }
