@@ -7,12 +7,12 @@ import (
 
 type CreateProductRequestValidation struct{}
 
-func (item CreateProductRequestValidation) Validate(request *requests.CreateProductRequest) (requestError string, errorCode string) {
+func (item CreateProductRequestValidation) Validate(request *requests.CreateProductRequest) (errorCode string) {
 	if request.Name == "" {
-		return string(customErrors.BAD_REQUEST), string(customErrors.NAME_IS_MANDATORY)
+		return string(customErrors.NAME_IS_MANDATORY)
 	}
 	if request.Price == 0 {
-		return string(customErrors.BAD_REQUEST), string(customErrors.PRICE_IS_MANDATORY)
+		return string(customErrors.PRICE_IS_MANDATORY)
 	}
-	return "", ""
+	return ""
 }

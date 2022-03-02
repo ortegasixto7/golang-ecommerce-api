@@ -26,6 +26,8 @@ func (this MongoProductPersistence) Update(product product.Product) {
 			primitive.E{Key: "description", Value: product.Description},
 			primitive.E{Key: "price", Value: product.Price},
 			primitive.E{Key: "quantity", Value: product.Quantity},
+			primitive.E{Key: "categories", Value: product.Categories},
+			primitive.E{Key: "photoUrl", Value: product.PhotoUrl},
 		}},
 	}
 	_, err := ProductsCollection.UpdateOne(Ctx, filter, update)
