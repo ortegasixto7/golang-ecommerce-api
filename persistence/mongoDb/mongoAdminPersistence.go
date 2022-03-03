@@ -18,8 +18,7 @@ func (this MongoAdminPersistence) Save(data admin.AdminUser) {
 }
 
 func (this MongoAdminPersistence) Update(data admin.AdminUser) {
-	objectId, _ := primitive.ObjectIDFromHex(data.Id)
-	filter := bson.M{"_id": objectId}
+	filter := bson.M{"_id": data.Id}
 	update := bson.D{
 		primitive.E{Key: "$set", Value: bson.D{
 			primitive.E{Key: "firstName", Value: data.FirstName},
@@ -33,12 +32,11 @@ func (this MongoAdminPersistence) Update(data admin.AdminUser) {
 }
 
 func (this MongoAdminPersistence) GetById(id string) admin.AdminUser {
-	data := admin.AdminUser{}
-	objectId, _ := primitive.ObjectIDFromHex(id)
-	filter := bson.M{"_id": objectId}
+	var data admin.AdminUser
+	filter := bson.M{"_id": id}
 	err := AdminUsersCollection.FindOne(Ctx, filter).Decode(&data)
 	if err != nil {
-		log.Fatal(err)
+		// fmt.Println(err)
 	}
 	return data
 }

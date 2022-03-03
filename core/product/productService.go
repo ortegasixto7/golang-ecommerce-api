@@ -9,29 +9,29 @@ type IProductService interface {
 }
 
 type ProductService struct {
-	Repository IProductPersistence
+	Persistence IProductPersistence
 }
 
-func NewProductService(repository IProductPersistence) *ProductService {
-	return &ProductService{Repository: repository}
+func NewProductService(persistence IProductPersistence) *ProductService {
+	return &ProductService{Persistence: persistence}
 }
 
 func (this ProductService) Save(product Product) {
-	this.Repository.Save(product)
+	this.Persistence.Save(product)
 }
 
 func (this ProductService) Update(product Product) {
-	this.Repository.Update(product)
+	this.Persistence.Update(product)
 }
 
 func (this ProductService) Delete(id string) {
-	this.Repository.Delete(id)
+	this.Persistence.Delete(id)
 }
 
 func (this ProductService) GetAll() []Product {
-	return this.Repository.GetAll()
+	return this.Persistence.GetAll()
 }
 
 func (this ProductService) GetById(id string) Product {
-	return this.Repository.GetById(id)
+	return this.Persistence.GetById(id)
 }

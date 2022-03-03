@@ -18,8 +18,7 @@ func (this MongoProductPersistence) Save(product product.Product) {
 }
 
 func (this MongoProductPersistence) Update(product product.Product) {
-	objectId, _ := primitive.ObjectIDFromHex(product.Id)
-	filter := bson.M{"_id": objectId}
+	filter := bson.M{"_id": product.Id}
 	update := bson.D{
 		primitive.E{Key: "$set", Value: bson.D{
 			primitive.E{Key: "name", Value: product.Name},
@@ -59,8 +58,7 @@ func (this MongoProductPersistence) GetAll() []product.Product {
 
 func (this MongoProductPersistence) GetById(id string) product.Product {
 	product := product.Product{}
-	objectId, _ := primitive.ObjectIDFromHex(id)
-	filter := bson.M{"_id": objectId}
+	filter := bson.M{"_id": id}
 	err := ProductsCollection.FindOne(Ctx, filter).Decode(&product)
 	if err != nil {
 		log.Fatal(err)

@@ -29,5 +29,8 @@ func main() {
 	server.GET("/products/:id", func(context echo.Context) error {
 		return presentation.ProductRouter{}.GetById(context)
 	})
+	server.POST("/admin/create-admin-user", func(context echo.Context) error {
+		return presentation.AdminRouter{}.CreateAdminUser(context)
+	})
 	server.Logger.Fatal(server.Start(":1323"))
 }
