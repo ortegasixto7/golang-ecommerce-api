@@ -1,5 +1,9 @@
 package admin
 
+import (
+	"golang.org/x/crypto/bcrypt"
+)
+
 type AdminController struct {
 	AdminService AdminService
 }
@@ -10,11 +14,13 @@ func (this AdminController) CreateAdminUser() (errorCode string) {
 
 	adminUser := this.AdminService.GetById(adminId)
 	if adminUser.Id == "" {
+
+		encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+
 		adminUser.Id = adminId
 		adminUser.FirstName = "Admin"
 		adminUser.LastName = "User"
-		// TODO: Encrypt password here
-		adminUser.Password = "123456"
+		adminUser.Password = string(encryptedPassword)
 		adminUser.Role = "ADMIN"
 		adminUser.Username = "admin"
 		this.AdminService.Save(adminUser)
