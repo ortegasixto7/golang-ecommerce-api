@@ -32,5 +32,8 @@ func main() {
 	server.POST("/admin/create-admin-user", func(context echo.Context) error {
 		return presentation.AdminRouter{}.CreateAdminUser(context)
 	})
+	server.POST("/auth/login", func(context echo.Context) error {
+		return presentation.AuthRouter{}.Login(context)
+	})
 	server.Logger.Fatal(server.Start(":1323"))
 }
