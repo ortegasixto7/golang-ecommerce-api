@@ -40,3 +40,13 @@ func (this MongoAdminPersistence) GetById(id string) admin.AdminUser {
 	}
 	return data
 }
+
+func (this MongoAdminPersistence) GetByUserName(username string) admin.AdminUser {
+	var data admin.AdminUser
+	filter := bson.M{"username": username}
+	err := AdminUsersCollection.FindOne(Ctx, filter).Decode(&data)
+	if err != nil {
+		// fmt.Println(err)
+	}
+	return data
+}

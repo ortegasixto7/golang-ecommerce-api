@@ -4,6 +4,7 @@ type IAdminService interface {
 	Save(AdminUser)
 	Update(AdminUser)
 	GetById(id string) (AdminUser, bool)
+	GetByUserName(username string) (AdminUser, bool)
 }
 
 type AdminService struct {
@@ -24,5 +25,10 @@ func (this AdminService) Save(data AdminUser) {
 
 func (this AdminService) GetById(id string) (AdminUser, bool) {
 	data := this.Persistence.GetById(id)
+	return data, data.Id == ""
+}
+
+func (this AdminService) GetByUserName(username string) (AdminUser, bool) {
+	data := this.Persistence.GetByUserName(username)
 	return data, data.Id == ""
 }
