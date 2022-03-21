@@ -13,15 +13,15 @@ type AdminRouter struct{}
 func (this AdminRouter) CreateAdminUser(c echo.Context) error {
 	controller := new(dependencyInjector.ContainerBuilder).GetAdminController()
 	errorCode := controller.CreateAdminUser()
-	if errorCode != "" {
+	if errorCode != nil {
 		return this.buildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, nil)
 }
 
-func (this AdminRouter) buildInvalidResponse(c echo.Context, errorCode string) error {
-	if errorCode == string(customErrors.INTERNAL_ERROR) {
-		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+func (this AdminRouter) buildInvalidResponse(c echo.Context, errorCode error) error {
+	if errorCode.Error() == customErrors.INTERNAL_ERROR {
+		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 	}
-	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 }

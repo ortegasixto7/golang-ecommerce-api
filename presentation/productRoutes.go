@@ -18,7 +18,7 @@ func (this ProductRouter) AddQuantity(c echo.Context) error {
 	}
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.AddQuantity(request)
-	if errorCode != "" {
+	if errorCode != nil {
 		return this.buildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
@@ -31,7 +31,7 @@ func (this ProductRouter) Update(c echo.Context) error {
 	}
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.Update(request)
-	if errorCode != "" {
+	if errorCode != nil {
 		return this.buildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
@@ -44,7 +44,7 @@ func (this ProductRouter) Create(c echo.Context) error {
 	}
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.Create(request)
-	if errorCode != "" {
+	if errorCode != nil {
 		return this.buildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
@@ -63,9 +63,9 @@ func (this ProductRouter) GetById(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
-func (this ProductRouter) buildInvalidResponse(c echo.Context, errorCode string) error {
-	if errorCode == string(customErrors.INTERNAL_ERROR) {
-		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+func (this ProductRouter) buildInvalidResponse(c echo.Context, errorCode error) error {
+	if errorCode.Error() == customErrors.INTERNAL_ERROR {
+		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 	}
-	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 }

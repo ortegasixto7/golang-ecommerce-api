@@ -3,7 +3,7 @@ package admin
 type IAdminService interface {
 	Save(AdminUser)
 	Update(AdminUser)
-	GetById(id string) AdminUser
+	GetById(id string) (AdminUser, bool)
 }
 
 type AdminService struct {
@@ -22,6 +22,7 @@ func (this AdminService) Save(data AdminUser) {
 	this.Persistence.Save(data)
 }
 
-func (this AdminService) GetById(id string) AdminUser {
-	return this.Persistence.GetById(id)
+func (this AdminService) GetById(id string) (AdminUser, bool) {
+	data := this.Persistence.GetById(id)
+	return data, data.Id == ""
 }

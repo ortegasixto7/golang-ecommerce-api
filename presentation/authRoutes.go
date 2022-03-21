@@ -17,16 +17,16 @@ func (this AuthRouter) Login(c echo.Context) error {
 		return err
 	}
 	controller := new(dependencyInjector.ContainerBuilder).GetAuthController()
-	jwt := controller.Login(request)
-	if jwt == "" {
-		return this.buildInvalidResponse(c, string(customErrors.LOGIN_ERROR))
+	jwt, error := controller.Login(request)
+	if error != nil {
+		return this.buildInvalidResponse(c, error)
 	}
 	return c.JSON(http.StatusOK, jwt)
 }
 
-func (this AuthRouter) buildInvalidResponse(c echo.Context, errorCode string) error {
-	if errorCode == string(customErrors.INTERNAL_ERROR) {
-		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+func (this AuthRouter) buildInvalidResponse(c echo.Context, errorCode error) error {
+	if errorCode.Error() == customErrors.INTERNAL_ERROR {
+		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 	}
-	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: string(errorCode)})
+	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 }

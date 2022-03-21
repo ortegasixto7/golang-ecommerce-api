@@ -1,18 +1,20 @@
 package validations
 
 import (
+	"errors"
+
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/validations/customErrors"
 )
 
 type CreateProductRequestValidation struct{}
 
-func (item CreateProductRequestValidation) Validate(request *requests.CreateProductRequest) (errorCode string) {
+func (item CreateProductRequestValidation) Validate(request *requests.CreateProductRequest) error {
 	if request.Name == "" {
-		return string(customErrors.NAME_IS_MANDATORY)
+		return errors.New(customErrors.NAME_IS_REQUIRED)
 	}
 	if request.Price == 0 {
-		return string(customErrors.PRICE_IS_MANDATORY)
+		return errors.New(customErrors.PRICE_IS_REQUIRED)
 	}
-	return ""
+	return nil
 }

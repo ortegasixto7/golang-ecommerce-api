@@ -9,9 +9,9 @@ type AuthController struct {
 	AuthService auth.AuthService
 }
 
-func (this AuthController) Login(request *requests.LoginRequest) string {
+func (this AuthController) Login(request *requests.LoginRequest) (string, error) {
 	// TODO: validate credentials
-	return this.AuthService.GenerateJwt("Sixto")
+	return this.AuthService.GenerateJwt("Sixto"), nil
 }
 
 // TODO: Add middleware to verify requests

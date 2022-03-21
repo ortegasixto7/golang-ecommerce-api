@@ -8,15 +8,11 @@ type AdminController struct {
 	AdminService AdminService
 }
 
-func (this AdminController) CreateAdminUser() (errorCode string) {
-
+func (this AdminController) CreateAdminUser() error {
 	var adminId = "62201eae6dbbd783dccb3c6b"
-
-	adminUser := this.AdminService.GetById(adminId)
-	if adminUser.Id == "" {
-
+	adminUser, isNil := this.AdminService.GetById(adminId)
+	if isNil {
 		encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
-
 		adminUser.Id = adminId
 		adminUser.FirstName = "Admin"
 		adminUser.LastName = "User"
@@ -25,6 +21,5 @@ func (this AdminController) CreateAdminUser() (errorCode string) {
 		adminUser.Username = "admin"
 		this.AdminService.Save(adminUser)
 	}
-
-	return ""
+	return nil
 }
