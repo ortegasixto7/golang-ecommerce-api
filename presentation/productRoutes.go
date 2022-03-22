@@ -1,7 +1,9 @@
 package presentation
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
@@ -52,6 +54,13 @@ func (this ProductRouter) Create(c echo.Context) error {
 
 func (this ProductRouter) GetAll(c echo.Context) error {
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
+	// TODO: refactor this token verification
+	authService := new(dependencyInjector.ContainerBuilder).GetAuthController().AuthService
+	token := c.Request().Header.Get("Authorization")
+	splitToken := strings.Split(token, "Bearer ")
+	token = splitToken[1]
+	fmt.Println(token)
+	authService.DecodeJwt(token)
 	products := controller.GetAll()
 	return c.JSON(http.StatusOK, products)
 }

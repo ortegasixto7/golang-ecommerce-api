@@ -21,7 +21,7 @@ func (this AuthRouter) Login(c echo.Context) error {
 	if error != nil {
 		return this.buildInvalidResponse(c, error)
 	}
-	return c.JSON(http.StatusOK, jwt)
+	return c.JSON(http.StatusOK, echo.Map{"token": jwt})
 }
 
 func (this AuthRouter) buildInvalidResponse(c echo.Context, errorCode error) error {

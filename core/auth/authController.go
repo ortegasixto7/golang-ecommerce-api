@@ -26,5 +26,3 @@ func (this AuthController) Login(request *requests.LoginRequest) (string, error)
 	}
 	return this.AuthService.GenerateJwt(adminUser.Id), nil
 }
-
-// TODO: Add middleware to verify requests
