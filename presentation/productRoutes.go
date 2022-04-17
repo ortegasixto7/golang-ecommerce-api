@@ -1,7 +1,6 @@
 package presentation
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -58,7 +57,6 @@ func (this ProductRouter) GetAll(c echo.Context) error {
 	token := c.Request().Header.Get("Authorization")
 	splitToken := strings.Split(token, "Bearer ")
 	token = splitToken[1]
-	fmt.Println(token)
 	authService.DecodeJwt(token)
 	products := controller.GetAll()
 	return c.JSON(http.StatusOK, products)

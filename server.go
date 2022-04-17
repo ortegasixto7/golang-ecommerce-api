@@ -14,26 +14,12 @@ func main() {
 	server.GET("/", func(context echo.Context) error {
 		return context.String(http.StatusOK, "API is working!")
 	})
-	server.PUT("/products/add-quantity", func(context echo.Context) error {
-		return presentation.ProductRouter{}.AddQuantity(context)
-	})
-	server.PUT("/products", func(context echo.Context) error {
-		return presentation.ProductRouter{}.Update(context)
-	})
-	server.POST("/products", func(context echo.Context) error {
-		return presentation.ProductRouter{}.Create(context)
-	})
-	server.GET("/products", func(context echo.Context) error {
-		return presentation.ProductRouter{}.GetAll(context)
-	})
-	server.GET("/products/:id", func(context echo.Context) error {
-		return presentation.ProductRouter{}.GetById(context)
-	})
-	server.POST("/admin/create-admin-user", func(context echo.Context) error {
-		return presentation.AdminRouter{}.CreateAdminUser(context)
-	})
-	server.POST("/auth/login", func(context echo.Context) error {
-		return presentation.AuthRouter{}.Login(context)
-	})
+	server.PUT("/products/add-quantity", presentation.ProductRouter{}.AddQuantity)
+	server.PUT("/products", presentation.ProductRouter{}.Update)
+	server.POST("/products", presentation.ProductRouter{}.Create)
+	server.GET("/products", presentation.ProductRouter{}.GetAll)
+	server.GET("/products/:id", presentation.ProductRouter{}.GetById)
+	server.POST("/admin/create-admin-user", presentation.AdminRouter{}.CreateAdminUser)
+	server.POST("/auth/login", presentation.AuthRouter{}.Login)
 	server.Logger.Fatal(server.Start(":1323"))
 }
