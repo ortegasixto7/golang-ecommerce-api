@@ -72,6 +72,7 @@ func (this ProductRouter) GetById(c echo.Context) error {
 	return c.JSON(http.StatusOK, product)
 }
 
+// TODO: Refactor this invalid response
 func (this ProductRouter) buildInvalidResponse(c echo.Context, errorCode error) error {
 	if errorCode.Error() == customErrors.INTERNAL_ERROR {
 		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: errorCode.Error()})

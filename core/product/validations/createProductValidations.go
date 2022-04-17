@@ -16,5 +16,8 @@ func (item CreateProductRequestValidation) Validate(request *requests.CreateProd
 	if request.Price == 0 {
 		return errors.New(customErrors.PRICE_IS_REQUIRED)
 	}
+	if request.Categories == nil {
+		request.Categories = []string{}
+	}
 	return nil
 }
