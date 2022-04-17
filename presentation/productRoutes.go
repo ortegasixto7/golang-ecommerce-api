@@ -8,7 +8,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/ortegasixto7/echo-go-supermarket-api/core/product/requests"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/dependencyInjector"
-	"github.com/ortegasixto7/echo-go-supermarket-api/external/validations/customErrors"
 )
 
 type ProductRouter struct{}
@@ -21,7 +20,7 @@ func (this ProductRouter) AddQuantity(c echo.Context) error {
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.AddQuantity(request)
 	if errorCode != nil {
-		return this.buildInvalidResponse(c, errorCode)
+		return BuildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
 }
@@ -34,7 +33,7 @@ func (this ProductRouter) Update(c echo.Context) error {
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.Update(request)
 	if errorCode != nil {
-		return this.buildInvalidResponse(c, errorCode)
+		return BuildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
 }
@@ -47,7 +46,7 @@ func (this ProductRouter) Create(c echo.Context) error {
 	controller := new(dependencyInjector.ContainerBuilder).GetProductController()
 	errorCode := controller.Create(request)
 	if errorCode != nil {
-		return this.buildInvalidResponse(c, errorCode)
+		return BuildInvalidResponse(c, errorCode)
 	}
 	return c.JSON(http.StatusOK, request)
 }
@@ -70,12 +69,4 @@ func (this ProductRouter) GetById(c echo.Context) error {
 	id := c.Param("id")
 	product := controller.GetById(id)
 	return c.JSON(http.StatusOK, product)
-}
-
-// TODO: Refactor this invalid response
-func (this ProductRouter) buildInvalidResponse(c echo.Context, errorCode error) error {
-	if errorCode.Error() == customErrors.INTERNAL_ERROR {
-		return c.JSON(http.StatusInternalServerError, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
-	}
-	return c.JSON(http.StatusBadRequest, customErrors.CustomResponse{ErrorCode: errorCode.Error()})
 }
