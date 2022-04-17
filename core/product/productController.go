@@ -7,7 +7,7 @@ import (
 )
 
 type ProductController struct {
-	ProductService IProductService
+	ProductPersistence IProductPersistence
 }
 
 func (this ProductController) AddQuantity(request *requests.AddProductQuantityRequest) error {
@@ -15,18 +15,18 @@ func (this ProductController) AddQuantity(request *requests.AddProductQuantityRe
 	// if requestError != "" {
 	// 	return requestError, errorCode
 	// }
-	productResult := this.ProductService.GetById(request.Id)
+	productResult := this.ProductPersistence.GetById(request.Id)
 	productResult.Quantity += request.Quantity
-	this.ProductService.Update(productResult)
+	this.ProductPersistence.Update(productResult)
 	return nil
 }
 
 func (this ProductController) GetById(id string) Product {
-	return this.ProductService.GetById(id)
+	return this.ProductPersistence.GetById(id)
 }
 
 func (this ProductController) GetAll() []Product {
-	return this.ProductService.GetAll()
+	return this.ProductPersistence.GetAll()
 }
 
 func (this ProductController) Update(request *requests.UpdateProductRequest) error {
@@ -34,13 +34,13 @@ func (this ProductController) Update(request *requests.UpdateProductRequest) err
 	// if requestError != "" {
 	// 	return requestError, errorCode
 	// }
-	productResult := this.ProductService.GetById(request.Id)
+	productResult := this.ProductPersistence.GetById(request.Id)
 	productResult.Name = request.Name
 	productResult.Description = request.Description
 	productResult.Price = request.Price
 	productResult.Categories = request.Categories
 	productResult.PhotoUrl = request.PhotoUrl
-	this.ProductService.Update(productResult)
+	this.ProductPersistence.Update(productResult)
 	return nil
 }
 
@@ -57,6 +57,6 @@ func (this ProductController) Create(request *requests.CreateProductRequest) err
 		PhotoUrl:    request.PhotoUrl,
 		Price:       request.Price,
 		Quantity:    0}
-	this.ProductService.Save(product)
+	this.ProductPersistence.Save(product)
 	return errorCode
 }

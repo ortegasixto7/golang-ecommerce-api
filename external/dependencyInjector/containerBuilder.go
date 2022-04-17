@@ -14,8 +14,8 @@ func (container ContainerBuilder) getAdminService() *admin.AdminService {
 	return &admin.AdminService{Persistence: &mongoDb.MongoAdminPersistence{}}
 }
 
-func (container ContainerBuilder) getProductService() *product.ProductService {
-	return &product.ProductService{Persistence: &mongoDb.MongoProductPersistence{}}
+func (container ContainerBuilder) getProductPersistence() product.IProductPersistence {
+	return mongoDb.MongoProductPersistence{}
 }
 
 func (container ContainerBuilder) getAuthService() *externalAuth.AuthService {
@@ -23,7 +23,7 @@ func (container ContainerBuilder) getAuthService() *externalAuth.AuthService {
 }
 
 func (container ContainerBuilder) GetProductController() *product.ProductController {
-	return &product.ProductController{ProductService: *container.getProductService()}
+	return &product.ProductController{ProductPersistence: container.getProductPersistence()}
 }
 
 func (container ContainerBuilder) GetAdminController() *admin.AdminController {
