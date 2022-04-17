@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	UsersCollection      *mongo.Collection
 	ProductsCollection   *mongo.Collection
 	AdminUsersCollection *mongo.Collection
 	Ctx                  = context.TODO()
@@ -32,4 +33,5 @@ func Setup() {
 	db := client.Database("goTest")
 	ProductsCollection = db.Collection("products")
 	AdminUsersCollection = db.Collection("adminUsers")
+	UsersCollection = db.Collection("users")
 }
