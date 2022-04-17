@@ -11,12 +11,12 @@ import (
 )
 
 type AuthController struct {
-	AuthService  auth.IAuthService
-	AdminService admin.IAdminService
+	AuthService      auth.IAuthService
+	AdminPersistence admin.IAdminPersistence
 }
 
 func (this AuthController) Login(request *requests.LoginRequest) (string, error) {
-	adminUser, isEmpty := this.AdminService.GetByUserName(request.UserName)
+	adminUser, isEmpty := this.AdminPersistence.GetByUserName(request.UserName)
 	if isEmpty {
 		return "", errors.New(customErrors.LOGIN_ERROR)
 	}

@@ -31,5 +31,5 @@ func (container ContainerBuilder) GetAdminController() *admin.AdminController {
 }
 
 func (container ContainerBuilder) GetAuthController() *auth.AuthController {
-	return &auth.AuthController{AuthService: *container.getAuthService(), AdminService: container.getAdminPersistence()}
+	return &auth.AuthController{AuthService: *container.getAuthService(), AdminPersistence: container.getAdminPersistence()}
 }
