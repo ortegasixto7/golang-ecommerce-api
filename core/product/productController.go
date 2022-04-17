@@ -7,7 +7,7 @@ import (
 )
 
 type ProductController struct {
-	ProductService ProductService
+	ProductService IProductService
 }
 
 func (this ProductController) AddQuantity(request *requests.AddProductQuantityRequest) error {

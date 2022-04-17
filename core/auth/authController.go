@@ -11,8 +11,8 @@ import (
 )
 
 type AuthController struct {
-	AuthService  auth.AuthService
-	AdminService admin.AdminService
+	AuthService  auth.IAuthService
+	AdminService admin.IAdminService
 }
 
 func (this AuthController) Login(request *requests.LoginRequest) (string, error) {

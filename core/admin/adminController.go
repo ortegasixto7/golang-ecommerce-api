@@ -5,7 +5,7 @@ import (
 )
 
 type AdminController struct {
-	AdminService AdminService
+	AdminService IAdminService
 }
 
 func (this AdminController) CreateAdminUser() error {
