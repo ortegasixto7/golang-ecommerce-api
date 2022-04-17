@@ -19,12 +19,13 @@ type Claims struct {
 }
 
 func (this AuthService) GenerateJwt(userId string) (token string) {
+	// TODO: Refactor this with env file
 	mySigningKey := []byte("AllYourBase")
 
 	claims := &Claims{
 		UserId: userId,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 5).Unix(),
 		},
 	}
 
@@ -35,9 +36,13 @@ func (this AuthService) GenerateJwt(userId string) (token string) {
 
 func (this AuthService) DecodeJwt(token string) (userId string) {
 	claims := &Claims{}
-	jwt.ParseWithClaims(token, claims, func(decodedToken *jwt.Token) (interface{}, error) {
+	_, error := jwt.ParseWithClaims(token, claims, func(decodedToken *jwt.Token) (interface{}, error) {
 		return []byte("AllYourBase"), nil
 	})
+
+	if error != nil {
+		return ""
+	}
 
 	return claims.UserId
 }
