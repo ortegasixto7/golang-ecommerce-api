@@ -10,8 +10,8 @@ import (
 
 type ContainerBuilder struct{}
 
-func (container ContainerBuilder) getAdminService() *admin.AdminService {
-	return &admin.AdminService{Persistence: &mongoDb.MongoAdminPersistence{}}
+func (container ContainerBuilder) getAdminPersistence() admin.IAdminPersistence {
+	return mongoDb.MongoAdminPersistence{}
 }
 
 func (container ContainerBuilder) getProductPersistence() product.IProductPersistence {
@@ -27,9 +27,9 @@ func (container ContainerBuilder) GetProductController() *product.ProductControl
 }
 
 func (container ContainerBuilder) GetAdminController() *admin.AdminController {
-	return &admin.AdminController{AdminService: *container.getAdminService()}
+	return &admin.AdminController{AdminPersistence: container.getAdminPersistence()}
 }
 
 func (container ContainerBuilder) GetAuthController() *auth.AuthController {
-	return &auth.AuthController{AuthService: *container.getAuthService(), AdminService: *container.getAdminService()}
+	return &auth.AuthController{AuthService: *container.getAuthService(), AdminService: container.getAdminPersistence()}
 }

@@ -31,22 +31,22 @@ func (this MongoAdminPersistence) Update(data admin.AdminUser) {
 	}
 }
 
-func (this MongoAdminPersistence) GetById(id string) admin.AdminUser {
+func (this MongoAdminPersistence) GetById(id string) (admin.AdminUser, bool) {
 	var data admin.AdminUser
 	filter := bson.M{"_id": id}
 	err := AdminUsersCollection.FindOne(Ctx, filter).Decode(&data)
 	if err != nil {
 		// fmt.Println(err)
 	}
-	return data
+	return data, data.Id == ""
 }
 
-func (this MongoAdminPersistence) GetByUserName(username string) admin.AdminUser {
+func (this MongoAdminPersistence) GetByUserName(username string) (admin.AdminUser, bool) {
 	var data admin.AdminUser
 	filter := bson.M{"username": username}
 	err := AdminUsersCollection.FindOne(Ctx, filter).Decode(&data)
 	if err != nil {
 		// fmt.Println(err)
 	}
-	return data
+	return data, data.Id == ""
 }

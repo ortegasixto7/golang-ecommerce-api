@@ -5,12 +5,12 @@ import (
 )
 
 type AdminController struct {
-	AdminService IAdminService
+	AdminPersistence IAdminPersistence
 }
 
 func (this AdminController) CreateAdminUser() error {
 	var adminId = "62201eae6dbbd783dccb3c6b"
-	adminUser, isNil := this.AdminService.GetById(adminId)
+	adminUser, isNil := this.AdminPersistence.GetById(adminId)
 	if isNil {
 		encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 		adminUser.Id = adminId
@@ -19,7 +19,7 @@ func (this AdminController) CreateAdminUser() error {
 		adminUser.Password = string(encryptedPassword)
 		adminUser.Role = "ADMIN"
 		adminUser.Username = "admin"
-		this.AdminService.Save(adminUser)
+		this.AdminPersistence.Save(adminUser)
 	}
 	return nil
 }
