@@ -3,6 +3,7 @@ package mongoDb
 import (
 	"context"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,8 +17,8 @@ var (
 )
 
 func Setup() {
-	host := "127.0.0.1"
-	port := "27017"
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
 	connectionURI := "mongodb://" + host + ":" + port + "/"
 	clientOptions := options.Client().ApplyURI(connectionURI)
 	client, err := mongo.Connect(Ctx, clientOptions)
@@ -30,7 +31,7 @@ func Setup() {
 		log.Fatal(err)
 	}
 
-	db := client.Database("goTest")
+	db := client.Database(os.Getenv("DB_NAME"))
 	ProductsCollection = db.Collection("products")
 	AdminUsersCollection = db.Collection("adminUsers")
 	UsersCollection = db.Collection("users")

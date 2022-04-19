@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"github.com/ortegasixto7/echo-go-supermarket-api/core/shared"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -17,7 +18,7 @@ func (this AdminController) CreateAdminUser() error {
 		adminUser.FirstName = "Admin"
 		adminUser.LastName = "User"
 		adminUser.Password = string(encryptedPassword)
-		adminUser.Role = "ADMIN"
+		adminUser.Role = shared.ADMIN
 		adminUser.Username = "admin"
 		this.AdminPersistence.Save(adminUser)
 	}
