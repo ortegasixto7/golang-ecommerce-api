@@ -56,5 +56,6 @@ func main() {
 	server.GET("/products/:id", presentation.ProductRouter{}.GetById)
 	server.POST("/admin/create-admin-user", presentation.AdminRouter{}.CreateAdminUser)
 	server.POST("/auth/login", presentation.AuthRouter{}.Login)
+	server.POST("/auth/sign-up", presentation.UserRouter{}.SignUp)
 	server.Logger.Fatal(server.Start(":1323"))
 }
