@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/ortegasixto7/echo-go-supermarket-api/external/dependencyInjector"
 	"github.com/ortegasixto7/echo-go-supermarket-api/persistence/mongoDb"
@@ -38,6 +40,10 @@ func adminUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func main() {
+	loadEnvFileError := godotenv.Load(".env")
+	if loadEnvFileError != nil {
+		log.Fatalf("Error loading .env file")
+	}
 	server := echo.New()
 	mongoDb.Setup()
 	server.GET("/", func(context echo.Context) error {

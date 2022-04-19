@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -19,8 +20,7 @@ type Claims struct {
 }
 
 func (this AuthService) GenerateJwt(userId string) (token string) {
-	// TODO: Refactor this with env file
-	mySigningKey := []byte("AllYourBase")
+	mySigningKey := []byte(os.Getenv("AUTH_SECRET_KEY"))
 
 	claims := &Claims{
 		UserId: userId,
@@ -37,7 +37,7 @@ func (this AuthService) GenerateJwt(userId string) (token string) {
 func (this AuthService) DecodeJwt(token string) (userId string) {
 	claims := &Claims{}
 	_, error := jwt.ParseWithClaims(token, claims, func(decodedToken *jwt.Token) (interface{}, error) {
-		return []byte("AllYourBase"), nil
+		return []byte(os.Getenv("AUTH_SECRET_KEY")), nil
 	})
 
 	if error != nil {
